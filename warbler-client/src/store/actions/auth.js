@@ -21,10 +21,14 @@ export function logout() {
   };
 }
 
-export function authUser(type, userData) {
+export function authUser(type, userData, userId) {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      return apiCall('post', `/api/auth/${type}`, userData)
+      return apiCall(
+        type === 'updateUser' ? 'put' : 'post',
+        type === 'updateUser' ? `/api/auth/${userId}` : `/api/auth/${type}`,
+        userData
+      )
         .then(({ token, ...user }) => {
           localStorage.setItem('jwtToken', token);
           setAuthorizationToken(token);

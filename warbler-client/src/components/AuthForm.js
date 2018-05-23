@@ -5,10 +5,12 @@ class AuthForm extends Component {
     super(props);
     this.state = {
       email: '',
-      username: '',
+      username: props.currentUser ? props.currentUser.user.username : '',
       password: '',
       groupPassword: '',
-      profileImageUrl: ''
+      profileImageUrl: props.currentUser
+        ? props.currentUser.user.profileImageUrl
+        : ''
     };
   }
 
@@ -20,9 +22,17 @@ class AuthForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const authType = this.props.signUp ? 'signup' : 'signin';
+    const authType = this.props.signUp
+      ? 'signup'
+      : this.props.updateUser
+        ? 'updateUser'
+        : 'signin';
     this.props
-      .onAuth(authType, this.state)
+      .onAuth(
+        authType,
+        this.state,
+        this.props.currentUser ? this.props.currentUser.user.id : null
+      )
       .then(() => {
         this.props.history.push('/');
       })
@@ -37,6 +47,7 @@ class AuthForm extends Component {
       heading,
       buttonText,
       signUp,
+      updateUser,
       errors,
       history,
       removeError
@@ -55,26 +66,30 @@ class AuthForm extends Component {
               {errors.message && (
                 <div className="alert alert-danger">{errors.message}</div>
               )}
-              <label htmlFor="email">Email:</label>
-              <input
-                className="form-control"
-                id="email"
-                name="email"
-                onChange={this.handleChange}
-                value={email}
-                type="text"
-              />
-              <label htmlFor="password">Password:</label>
-              <input
-                className="form-control"
-                id="password"
-                name="password"
-                onChange={this.handleChange}
-                type="password"
-              />
-              {signUp && (
+              {!updateUser && (
                 <div>
-                  <label htmlFor="username">Username:</label>
+                  <label htmlFor="email">Email</label>
+                  <input
+                    className="form-control"
+                    id="email"
+                    name="email"
+                    onChange={this.handleChange}
+                    value={email}
+                    type="text"
+                  />
+                  <label htmlFor="password">Password</label>
+                  <input
+                    className="form-control"
+                    id="password"
+                    name="password"
+                    onChange={this.handleChange}
+                    type="password"
+                  />
+                </div>
+              )}
+              {(signUp || updateUser) && (
+                <div>
+                  <label htmlFor="username">Username</label>
                   <input
                     className="form-control"
                     id="username"
@@ -83,7 +98,7 @@ class AuthForm extends Component {
                     value={username}
                     type="text"
                   />
-                  <label htmlFor="image-url">Image URL:</label>
+                  <label htmlFor="image-url">Image URL</label>
                   <input
                     className="form-control"
                     id="image-url"
@@ -92,7 +107,11 @@ class AuthForm extends Component {
                     value={profileImageUrl}
                     type="text"
                   />
-                  <label htmlFor="group-password">Group Password:</label>
+                </div>
+              )}
+              {signUp && (
+                <div>
+                  <label htmlFor="group-password">Group Password</label>
                   <input
                     className="form-control"
                     id="group-password"

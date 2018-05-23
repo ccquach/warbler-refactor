@@ -53,7 +53,19 @@ const Main = props => {
         />
         <Route
           path="/users/:id/messages/new"
-          component={withAuth(MessageForm)}
+          component={withAuth({})(MessageForm)}
+        />
+        <Route
+          path="/users/:id/settings"
+          component={withAuth({
+            removeError,
+            errors,
+            onAuth: authUser,
+            updateUser: true,
+            currentUser,
+            buttonText: 'Save Changes',
+            heading: 'Account Settings'
+          })(AuthForm)}
         />
       </Switch>
     </div>
