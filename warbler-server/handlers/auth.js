@@ -3,13 +3,20 @@ const jwt = require('jsonwebtoken');
 
 exports.signup = async function(req, res, next) {
   try {
+    if (req.body.groupPassword !== process.env.GROUP_PWD) {
+      return next({
+        status: 400,
+        message: 'Invalid group password.'
+      });
+    }
     let user = await db.User.create(req.body);
     let { id, username, profileImageUrl } = user;
-    let token = jwt.sign({
+    let token = jwt.sign(
+      {
         id,
         username,
         profileImageUrl
-      }, 
+      },
       process.env.SECRET_KEY
     );
     return res.status(200).json({
@@ -27,7 +34,7 @@ exports.signup = async function(req, res, next) {
       message: err.message
     });
   }
-}
+};
 
 exports.signin = async function(req, res, next) {
   try {
@@ -37,7 +44,8 @@ exports.signin = async function(req, res, next) {
     let { id, username, profileImageUrl } = user;
     let isMatch = await user.comparePassword(req.body.password);
     if (isMatch) {
-      let token = jwt.sign({
+      let token = jwt.sign(
+        {
           id,
           username,
           profileImageUrl
@@ -62,5 +70,4 @@ exports.signin = async function(req, res, next) {
       message: 'Invalid email/password.'
     });
   }
-  
-}
+};

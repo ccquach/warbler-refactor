@@ -7,6 +7,7 @@ class AuthForm extends Component {
       email: '',
       username: '',
       password: '',
+      groupPassword: '',
       profileImageUrl: ''
     };
   }
@@ -90,6 +91,14 @@ class AuthForm extends Component {
                     onChange={this.handleChange}
                     value={profileImageUrl}
                     type="text"
+                  />
+                  <label htmlFor="group-password">Group Password:</label>
+                  <input
+                    className="form-control"
+                    id="group-password"
+                    name="groupPassword"
+                    onChange={this.handleChange}
+                    type="password"
                   />
                 </div>
               )}
