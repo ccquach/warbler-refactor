@@ -32,20 +32,24 @@ class MessageForm extends Component {
     });
 
     return (
-      <form onSubmit={this.handleNewMessage}>
-        {errors.message && (
-          <div className="alert alert-danger">{errors.message}</div>
-        )}
-        <input
-          type="text"
-          className="form-control"
-          value={this.state.message}
-          onChange={e => this.setState({ message: e.target.value })}
-        />
-        <button type="submit" className="btn btn-success float-right">
-          Add my message!
-        </button>
-      </form>
+      <div className="container">
+        <div className="offset-2 col-md-8">
+          <form onSubmit={this.handleNewMessage}>
+            {errors.message && (
+              <div className="alert alert-danger">{errors.message}</div>
+            )}
+            <textarea
+              maxLength="160"
+              className="form-control"
+              value={this.state.message}
+              onChange={e => this.setState({ message: e.target.value })}
+            />
+            <button type="submit" className="btn btn-success float-right">
+              Add my message!
+            </button>
+          </form>
+        </div>
+      </div>
     );
   }
 }

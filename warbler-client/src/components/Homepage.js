@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import MessageTimeline from './MessageTimeline';
+import Hero from '../images/warbler-hero.jpg';
 
 const Homepage = ({ currentUser }) => {
   if (!currentUser.isAuthenticated) {
@@ -16,10 +17,17 @@ const Homepage = ({ currentUser }) => {
   }
   return (
     <div>
-      <MessageTimeline
-        profileImageUrl={currentUser.user.profileImageUrl}
-        username={currentUser.user.username}
+      <img
+        src={Hero}
+        alt="Timeline hero"
+        className="img-fluid mb-3 timeline-hero"
       />
+      <div className="container">
+        <MessageTimeline
+          profileImageUrl={currentUser.user.profileImageUrl}
+          username={currentUser.user.username}
+        />
+      </div>
     </div>
   );
 };
