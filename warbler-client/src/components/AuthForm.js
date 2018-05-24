@@ -132,9 +132,11 @@ class AuthForm extends Component {
               <button type="submit" className="btn btn-primary btn-block">
                 {buttonText}
               </button>
-              <a onClick={this.handleChangePassword} className="float-right">
-                {changePassword ? 'Changed my mind' : 'Change Password'}
-              </a>
+              {updateUser && (
+                <a onClick={this.handleChangePassword} className="float-right">
+                  {changePassword ? 'Changed my mind' : 'Change Password'}
+                </a>
+              )}
             </form>
             {changePassword && (
               <PasswordForm
