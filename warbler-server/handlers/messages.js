@@ -1,9 +1,11 @@
 const db = require('../models');
+const sanitize = require('sanitize-html');
 
 exports.createMessage = async function(req, res, next) {
   try {
+    let sanitizedText = sanitize(req.body.text);
     let message = await db.Message.create({
-      text: req.body.text,
+      text: sanitizedText,
       user: req.params.id
     });
     let foundUser = await db.User.findById(req.params.id);
