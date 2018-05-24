@@ -43,3 +43,21 @@ export function authUser(type, userData, userId) {
     });
   };
 }
+
+export function updatePassword(passwordData, userId) {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      return apiCall('put', `/api/auth/${userId}/password`, passwordData)
+        .then(res => {
+          dispatch(
+            addError('Password updated! Use new password on next log in.')
+          );
+          resolve();
+        })
+        .catch(err => {
+          dispatch(addError(err.message));
+          reject();
+        });
+    });
+  };
+}

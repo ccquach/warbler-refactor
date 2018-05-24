@@ -92,6 +92,19 @@ a.btn.btn-danger:hover {
 }
 
 /* Forms */
+form {
+  margin-bottom: 60px;
+}
+
 form button[type='submit'] {
   margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+form a {
+  cursor: pointer;
+}
+
+form a:not([href]):not([tabindex]):hover {
+  text-decoration: underline;
 }

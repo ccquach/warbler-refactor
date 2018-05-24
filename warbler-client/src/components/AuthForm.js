@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PasswordForm from './PasswordForm';
 
 class AuthForm extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class AuthForm extends Component {
       groupPassword: '',
       profileImageUrl: props.currentUser
         ? props.currentUser.user.profileImageUrl
-        : ''
+        : '',
+      changePassword: false
     };
   }
 
@@ -41,8 +43,13 @@ class AuthForm extends Component {
       });
   };
 
+  handleChangePassword = e => {
+    e.preventDefault();
+    this.setState({ changePassword: !this.state.changePassword });
+  };
+
   render() {
-    const { email, username, profileImageUrl } = this.state;
+    const { email, username, profileImageUrl, changePassword } = this.state;
     const {
       heading,
       buttonText,
@@ -50,7 +57,8 @@ class AuthForm extends Component {
       updateUser,
       errors,
       history,
-      removeError
+      removeError,
+      currentUser
     } = this.props;
 
     history.listen(() => {
@@ -121,13 +129,19 @@ class AuthForm extends Component {
                   />
                 </div>
               )}
-              <button
-                type="submit"
-                className="btn btn-primary btn-block btn-lg"
-              >
+              <button type="submit" className="btn btn-primary btn-block">
                 {buttonText}
               </button>
+              <a onClick={this.handleChangePassword} className="float-right">
+                {changePassword ? 'Changed my mind' : 'Change Password'}
+              </a>
             </form>
+            {changePassword && (
+              <PasswordForm
+                handleChangePassword={this.props.onChangePassword}
+                currentUser={currentUser}
+              />
+            )}
           </div>
         </div>
       </div>

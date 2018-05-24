@@ -110,3 +110,31 @@ exports.updateUser = async function(req, res, next) {
     });
   }
 };
+
+exports.updatePassword = async function(req, res, next) {
+  try {
+    var user = await db.User.findById(req.params.id);
+    // compare old password
+    let isUser = await user.comparePassword(req.body.oldPassword);
+    if (isUser) {
+      // compare new and confirm passwords
+      if (req.body.newPassword === req.body.confirmPassword) {
+        user.password = req.body.newPassword;
+        await user.save();
+        return res.status(200).json(user);
+      } else {
+        return next({
+          status: 400,
+          message: 'New passwords do not match.'
+        });
+      }
+    } else {
+      return next({
+        status: 401,
+        message: 'Invalid password.'
+      });
+    }
+  } catch (err) {
+    return next(err);
+  }
+};

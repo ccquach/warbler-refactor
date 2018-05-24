@@ -3,13 +3,13 @@ import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Homepage from '../components/Homepage';
 import AuthForm from '../components/AuthForm';
-import { authUser } from '../store/actions/auth';
+import { authUser, updatePassword } from '../store/actions/auth';
 import { removeError } from '../store/actions/errors';
 import withAuth from '../hocs/withAuth';
 import MessageForm from './MessageForm';
 
 const Main = props => {
-  const { currentUser, authUser, errors, removeError } = props;
+  const { currentUser, authUser, errors, removeError, updatePassword } = props;
   return (
     <div className="container">
       <Switch>
@@ -61,6 +61,7 @@ const Main = props => {
             removeError,
             errors,
             onAuth: authUser,
+            onChangePassword: updatePassword,
             updateUser: true,
             currentUser,
             buttonText: 'Save Changes',
@@ -80,5 +81,5 @@ function mapStateToProps(state) {
 }
 
 export default withRouter(
-  connect(mapStateToProps, { authUser, removeError })(Main)
+  connect(mapStateToProps, { authUser, removeError, updatePassword })(Main)
 );
