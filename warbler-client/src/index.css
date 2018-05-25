@@ -66,11 +66,6 @@ ul.nav.navbar-nav li {
 
 /* Messages */
 
-.timeline-hero {
-  max-height: 360px;
-  min-width: 100%;
-}
-
 #messages .list-group-item {
   display: flex;
   align-items: flex-start;

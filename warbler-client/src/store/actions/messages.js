@@ -1,5 +1,5 @@
 import { apiCall } from '../../services/api';
-import { addError } from './errors';
+import { addFlash } from './flash';
 import { LOAD_MESSAGES, REMOVE_MESSAGE } from '../actionTypes';
 
 export const loadMessages = messages => ({
@@ -16,7 +16,7 @@ export const removeMessage = (user_id, message_id) => {
   return dispatch => {
     return apiCall('delete', `/api/users/${user_id}/messages/${message_id}`)
       .then(() => dispatch(remove(message_id)))
-      .catch(err => dispatch(addError(err.message)));
+      .catch(err => dispatch(addFlash('danger', err.message)));
   };
 };
 
@@ -24,7 +24,7 @@ export const fetchMessages = () => {
   return dispatch => {
     return apiCall('get', '/api/messages')
       .then(res => dispatch(loadMessages(res)))
-      .catch(err => dispatch(addError(err.message)));
+      .catch(err => dispatch(addFlash('danger', err.message)));
   };
 };
 
@@ -35,7 +35,7 @@ export const postNewMessage = text => (dispatch, getState) => {
     return apiCall('post', `/api/users/${id}/messages`, { text })
       .then(res => resolve())
       .catch(err => {
-        dispatch(addError(err.message));
+        dispatch(addFlash('danger', err.message));
         reject();
       });
   });

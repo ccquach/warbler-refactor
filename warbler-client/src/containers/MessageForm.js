@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postNewMessage } from '../store/actions/messages';
-import { removeError } from '../store/actions/errors';
 
 class MessageForm extends Component {
   constructor(props) {
@@ -25,41 +24,22 @@ class MessageForm extends Component {
   };
 
   render() {
-    const { errors, history, removeError } = this.props;
-
-    history.listen(() => {
-      removeError();
-    });
-
     return (
-      <div className="container">
-        <div className="offset-2 col-md-8">
-          <form onSubmit={this.handleNewMessage}>
-            {errors.message && (
-              <div className="alert alert-danger">{errors.message}</div>
-            )}
-            <textarea
-              maxLength="160"
-              className="form-control"
-              value={this.state.message}
-              onChange={e => this.setState({ message: e.target.value })}
-            />
-            <button type="submit" className="btn btn-success float-right">
-              Add my message!
-            </button>
-          </form>
-        </div>
+      <div className="offset-2 col-md-8">
+        <form onSubmit={this.handleNewMessage}>
+          <textarea
+            maxLength="160"
+            className="form-control"
+            value={this.state.message}
+            onChange={e => this.setState({ message: e.target.value })}
+          />
+          <button type="submit" className="btn btn-success float-right">
+            Add my message!
+          </button>
+        </form>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    errors: state.errors
-  };
-}
-
-export default connect(mapStateToProps, { postNewMessage, removeError })(
-  MessageForm
-);
+export default connect(null, { postNewMessage })(MessageForm);

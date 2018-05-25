@@ -19,12 +19,7 @@ class PasswordForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props
-      .handleChangePassword(this.state, this.props.currentUser.user.id)
-      .then(() => this.props.history.push('/'))
-      .catch(() => {
-        return;
-      });
+    this.props.handleChangePassword(this.state, this.props.currentUser.user.id);
   };
 
   render() {

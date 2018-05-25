@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import currentUser from './currentUser';
-import errors from './errors';
 import messages from './messages';
+import flash from './flash';
 
 const rootReducer = combineReducers({
   currentUser,
-  errors,
-  messages
+  messages,
+  flash
 });
 
 export default rootReducer;

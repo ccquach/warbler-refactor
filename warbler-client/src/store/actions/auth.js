@@ -1,6 +1,6 @@
 import { apiCall, setTokenHeader } from '../../services/api';
 import { SET_CURRENT_USER } from '../actionTypes';
-import { addError, removeError } from './errors';
+import { addFlash } from './flash';
 
 export function setCurrentUser(user) {
   return {
@@ -33,11 +33,16 @@ export function authUser(type, userData, userId) {
           localStorage.setItem('jwtToken', token);
           setAuthorizationToken(token);
           dispatch(setCurrentUser(user));
-          dispatch(removeError());
+          dispatch(
+            addFlash(
+              'success',
+              type === 'updateUser' ? 'Settings saved!' : null
+            )
+          );
           resolve();
         })
         .catch(err => {
-          dispatch(addError(err.message));
+          dispatch(addFlash('danger', err.message));
           reject();
         });
     });
@@ -46,18 +51,17 @@ export function authUser(type, userData, userId) {
 
 export function updatePassword(passwordData, userId) {
   return dispatch => {
-    return new Promise((resolve, reject) => {
-      return apiCall('put', `/api/auth/${userId}/password`, passwordData)
-        .then(res => {
-          dispatch(
-            addError('Password updated! Use new password on next log in.')
-          );
-          resolve();
-        })
-        .catch(err => {
-          dispatch(addError(err.message));
-          reject();
-        });
-    });
+    return apiCall('put', `/api/auth/${userId}/password`, passwordData)
+      .then(res => {
+        dispatch(
+          addFlash(
+            'success',
+            'Password updated! Use new password on next log in.'
+          )
+        );
+      })
+      .catch(err => {
+        dispatch(addFlash('danger', err.message));
+      });
   };
 }
