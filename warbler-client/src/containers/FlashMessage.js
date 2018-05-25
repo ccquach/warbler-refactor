@@ -1,11 +1,42 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { removeFlash } from '../store/actions/flash';
+
+const DURATION = 8000;
 
 class FlashMessage extends Component {
+  componentDidMount() {
+    if (this.timer !== null) clearTimeout(this.timer);
+    this.setTimer();
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
+  setTimer = () => {
+    this.timeout = setTimeout(() => {
+      this.props.removeFlash();
+      this.timeout = null;
+    }, DURATION);
+  };
+
+  onEnter = () => {
+    clearTimeout(this.timeout);
+  };
+
+  onExit = () => {
+    this.setTimer();
+  };
+
   render() {
     const { category, message } = this.props;
     return (
-      <div className={`alert alert-${category}`}>
+      <div
+        className={`alert alert-${category}`}
+        onMouseEnter={this.onEnter}
+        onMouseLeave={this.onExit}
+      >
         {message}
         <span className="float-right">&times;</span>
       </div>
@@ -20,4 +51,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(FlashMessage);
+export default connect(mapStateToProps, { removeFlash })(FlashMessage);
