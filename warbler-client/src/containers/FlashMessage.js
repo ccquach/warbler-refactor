@@ -29,6 +29,10 @@ class FlashMessage extends Component {
     this.setTimer();
   };
 
+  onClose = () => {
+    this.props.removeFlash();
+  };
+
   render() {
     const { category, message } = this.props;
     return (
@@ -38,7 +42,9 @@ class FlashMessage extends Component {
         onMouseLeave={this.onExit}
       >
         {message}
-        <span className="float-right">&times;</span>
+        <span className="float-right flash-close-button" onClick={this.onClose}>
+          &times;
+        </span>
       </div>
     );
   }
