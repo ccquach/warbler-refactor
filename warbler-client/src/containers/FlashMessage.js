@@ -42,9 +42,9 @@ class FlashMessage extends Component {
         onMouseLeave={this.onExit}
       >
         {message}
-        <span className="float-right flash-close-button" onClick={this.onClose}>
-          &times;
-        </span>
+        <button className="close" onClick={this.onClose}>
+          <span>&times;</span>
+        </button>
       </div>
     );
   }

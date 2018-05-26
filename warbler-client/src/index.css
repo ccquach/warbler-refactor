@@ -109,9 +109,3 @@ form a {
 form a:not([href]):not([tabindex]):hover {
   text-decoration: underline;
 }
-
-/* Flash Messages */
-
-.flash-close-button:hover {
-  cursor: pointer;
-}

@@ -8,6 +8,7 @@ import { removeFlash } from '../store/actions/flash';
 import withAuth from '../hocs/withAuth';
 import MessageForm from './MessageForm';
 import FlashMessage from './FlashMessage';
+import Scale from '../components/animations/Scale';
 
 const Main = props => {
   const {
@@ -25,7 +26,7 @@ const Main = props => {
 
   return (
     <div className="container">
-      {flash.message && <FlashMessage />}
+      <Scale el="flash">{flash.message && <FlashMessage />}</Scale>
       <Switch>
         <Route
           exact
