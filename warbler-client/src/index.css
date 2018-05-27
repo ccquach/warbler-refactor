@@ -83,6 +83,10 @@ ul.nav.navbar-nav li {
   margin: 2px 30px 10px 10px;
 }
 
+.message-area {
+  display: inline-block;
+}
+
 .btn:hover {
   cursor: pointer;
 }

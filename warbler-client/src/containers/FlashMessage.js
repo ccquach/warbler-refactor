@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { removeFlash } from '../store/actions/flash';
+import CloseButton from '../components/CloseButton';
 
 const DURATION = 8000;
 
@@ -42,9 +43,7 @@ class FlashMessage extends Component {
         onMouseLeave={this.onExit}
       >
         {message}
-        <button className="close" onClick={this.onClose}>
-          <span>&times;</span>
-        </button>
+        <CloseButton onClose={this.onClose} />
       </div>
     );
   }
