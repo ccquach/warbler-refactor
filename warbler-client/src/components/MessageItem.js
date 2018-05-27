@@ -9,9 +9,10 @@ const MessageItem = ({
   text,
   username,
   removeMessage,
-  isCorrectUser
+  isCorrectUser,
+  style
 }) => (
-  <div>
+  <div style={style}>
     <li className="list-group-item">
       <img
         src={profileImageUrl || DefaultProfileImg}
