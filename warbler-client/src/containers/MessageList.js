@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchMessages, removeMessage } from '../store/actions/messages';
 import MessageItem from '../components/MessageItem';
 import { spring, TransitionMotion } from 'react-motion';
+import Loading from '../components/Loading';
 
 class MessageList extends Component {
   componentDidMount() {
@@ -20,11 +21,16 @@ class MessageList extends Component {
   });
 
   render() {
-    const { messages, removeMessage, currentUser } = this.props;
+    const { messages, removeMessage, currentUser, isFetching } = this.props;
     return (
-      <div className="row col-sm-8">
+      <div className="col-sm-8 loading-wrapper">
+        {isFetching ? <Loading /> : null}
         <div className="offset-1 col-sm-10">
-          <ul className="list-group" id="messages">
+          <ul
+            className="list-group"
+            id="messages"
+            style={{ opacity: isFetching ? 0.5 : 1 }}
+          >
             <TransitionMotion
               willEnter={this.willEnter}
               willLeave={this.willLeave}
@@ -37,29 +43,33 @@ class MessageList extends Component {
                 data: m
               }))}
             >
-              {interpolated => (
-                <div>
-                  {interpolated.map(({ key, style, data }) => (
-                    <MessageItem
-                      key={`${key}-transition`}
-                      style={{
-                        transform: `translateY(${style.translateY}px)`,
-                        opacity: style.opacity
-                      }}
-                      date={data.createdAt}
-                      text={data.text}
-                      username={data.user.username}
-                      profileImageUrl={data.user.profileImageUrl}
-                      removeMessage={removeMessage.bind(
-                        this,
-                        data.user._id,
-                        data._id
-                      )}
-                      isCorrectUser={currentUser === data.user._id}
-                    />
-                  ))}
-                </div>
-              )}
+              {interpolated =>
+                interpolated.length || isFetching ? (
+                  <div>
+                    {interpolated.map(({ key, style, data }) => (
+                      <MessageItem
+                        key={`${key}-transition`}
+                        style={{
+                          transform: `translateY(${style.translateY}px)`,
+                          opacity: style.opacity
+                        }}
+                        date={data.createdAt}
+                        text={data.text}
+                        username={data.user.username}
+                        profileImageUrl={data.user.profileImageUrl}
+                        removeMessage={removeMessage.bind(
+                          this,
+                          data.user._id,
+                          data._id
+                        )}
+                        isCorrectUser={currentUser === data.user._id}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ textAlign: 'center' }}>No messages found.</p>
+                )
+              }
             </TransitionMotion>
           </ul>
         </div>
@@ -71,7 +81,8 @@ class MessageList extends Component {
 function mapStateToProps(state) {
   return {
     messages: state.messages,
-    currentUser: state.currentUser.user.id
+    currentUser: state.currentUser.user.id,
+    isFetching: state.loading.isFetching
   };
 }
 

@@ -17,7 +17,8 @@ const Main = props => {
     removeFlash,
     updatePassword,
     flash,
-    history
+    history,
+    isFetching
   } = props;
 
   history.listen(() => {
@@ -42,6 +43,7 @@ const Main = props => {
                 onAuth={authUser}
                 buttonText="Log in"
                 heading="Welcome back!"
+                isFetching={isFetching}
                 {...props}
               />
             );
@@ -57,6 +59,7 @@ const Main = props => {
                 signUp
                 buttonText="Sign me up!"
                 heading="Join Warbler today!"
+                isFetching={isFetching}
                 {...props}
               />
             );
@@ -74,7 +77,8 @@ const Main = props => {
             updateUser: true,
             currentUser,
             buttonText: 'Save Changes',
-            heading: 'Account Settings'
+            heading: 'Account Settings',
+            isFetching
           })(AuthForm)}
         />
       </Switch>
@@ -85,7 +89,8 @@ const Main = props => {
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
-    flash: state.flash
+    flash: state.flash,
+    isFetching: state.loading.isFetching
   };
 }
 

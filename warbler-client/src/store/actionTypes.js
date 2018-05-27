@@ -3,3 +3,4 @@ export const LOAD_MESSAGES = 'LOAD_MESSAGES';
 export const REMOVE_MESSAGE = 'REMOVE_MESSAGE';
 export const ADD_FLASH = 'ADD_FLASH';
 export const REMOVE_FLASH = 'REMOVE_FLASH';
+export const SET_LOADING_STATE = 'SET_LOADING_STATE';

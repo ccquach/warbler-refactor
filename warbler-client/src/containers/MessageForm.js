@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postNewMessage } from '../store/actions/messages';
+import Loading from '../components/Loading';
 
 class MessageForm extends Component {
   constructor(props) {
@@ -14,19 +15,21 @@ class MessageForm extends Component {
     e.preventDefault();
     this.props
       .postNewMessage(this.state.message)
-      .then(() => {
-        this.setState({ message: '' });
-        this.props.history.push('/');
-      })
+      .then(() => this.props.history.push('/'))
       .catch(() => {
         return;
       });
   };
 
   render() {
+    const { isFetching } = this.props;
     return (
-      <div className="offset-2 col-md-8">
-        <form onSubmit={this.handleNewMessage}>
+      <div className="offset-2 col-md-8 loading-wrapper">
+        {isFetching ? <Loading /> : null}
+        <form
+          onSubmit={this.handleNewMessage}
+          style={{ opacity: isFetching ? 0.5 : 1 }}
+        >
           <textarea
             maxLength="160"
             className="form-control"
@@ -42,4 +45,10 @@ class MessageForm extends Component {
   }
 }
 
-export default connect(null, { postNewMessage })(MessageForm);
+function mapStateToProps(state) {
+  return {
+    isFetching: state.loading.isFetching
+  };
+}
+
+export default connect(mapStateToProps, { postNewMessage })(MessageForm);

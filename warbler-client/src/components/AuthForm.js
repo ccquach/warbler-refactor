@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PasswordForm from './PasswordForm';
 import DefaultProfileImg from '../images/default-profile-image.jpg';
+import Loading from './Loading';
 
 class AuthForm extends Component {
   constructor(props) {
@@ -54,12 +55,23 @@ class AuthForm extends Component {
 
   render() {
     const { email, username, profileImageUrl, changePassword } = this.state;
-    const { heading, buttonText, signUp, updateUser, currentUser } = this.props;
+    const {
+      heading,
+      buttonText,
+      signUp,
+      updateUser,
+      currentUser,
+      isFetching
+    } = this.props;
 
     return (
-      <div className="row justify-content-md-center text-center">
+      <div className="row justify-content-md-center text-center loading-wrapper">
+        {isFetching ? <Loading /> : null}
         <div className="col-md-6">
-          <form onSubmit={this.handleSubmit}>
+          <form
+            onSubmit={this.handleSubmit}
+            style={{ opacity: isFetching ? 0.5 : 1 }}
+          >
             <h2>{heading}</h2>
             {!updateUser && (
               <div>

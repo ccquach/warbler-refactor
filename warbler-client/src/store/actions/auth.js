@@ -1,6 +1,7 @@
 import { apiCall, setTokenHeader } from '../../services/api';
 import { SET_CURRENT_USER } from '../actionTypes';
 import { addFlash } from './flash';
+import { setLoadingState } from './loading';
 
 export function setCurrentUser(user) {
   return {
@@ -23,6 +24,7 @@ export function logout() {
 
 export function authUser(type, userData, userId) {
   return dispatch => {
+    dispatch(setLoadingState(true));
     return new Promise((resolve, reject) => {
       return apiCall(
         type === 'updateUser' ? 'put' : 'post',
@@ -32,6 +34,7 @@ export function authUser(type, userData, userId) {
         .then(({ token, ...user }) => {
           localStorage.setItem('jwtToken', token);
           setAuthorizationToken(token);
+          dispatch(setLoadingState(false));
           dispatch(setCurrentUser(user));
           dispatch(
             addFlash(
@@ -42,6 +45,7 @@ export function authUser(type, userData, userId) {
           resolve();
         })
         .catch(err => {
+          dispatch(setLoadingState(false));
           dispatch(addFlash('danger', err.message));
           reject();
         });
@@ -51,8 +55,10 @@ export function authUser(type, userData, userId) {
 
 export function updatePassword(passwordData, userId) {
   return dispatch => {
+    dispatch(setLoadingState(true));
     return apiCall('put', `/api/auth/${userId}/password`, passwordData)
       .then(res => {
+        dispatch(setLoadingState(false));
         dispatch(
           addFlash(
             'success',
@@ -61,6 +67,7 @@ export function updatePassword(passwordData, userId) {
         );
       })
       .catch(err => {
+        dispatch(setLoadingState(false));
         dispatch(addFlash('danger', err.message));
       });
   };

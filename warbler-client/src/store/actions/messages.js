@@ -1,6 +1,7 @@
 import { apiCall } from '../../services/api';
 import { addFlash } from './flash';
 import { LOAD_MESSAGES, REMOVE_MESSAGE } from '../actionTypes';
+import { setLoadingState } from './loading';
 
 export const loadMessages = messages => ({
   type: LOAD_MESSAGES,
@@ -22,19 +23,31 @@ export const removeMessage = (user_id, message_id) => {
 
 export const fetchMessages = () => {
   return dispatch => {
+    dispatch(setLoadingState(true));
     return apiCall('get', '/api/messages')
-      .then(res => dispatch(loadMessages(res)))
-      .catch(err => dispatch(addFlash('danger', err.message)));
+      .then(res => {
+        dispatch(setLoadingState(false));
+        dispatch(loadMessages(res));
+      })
+      .catch(err => {
+        dispatch(setLoadingState(false));
+        dispatch(addFlash('danger', err.message));
+      });
   };
 };
 
 export const postNewMessage = text => (dispatch, getState) => {
   let { currentUser } = getState();
   const id = currentUser.user.id;
+  dispatch(setLoadingState(true));
   return new Promise((resolve, reject) => {
     return apiCall('post', `/api/users/${id}/messages`, { text })
-      .then(res => resolve())
+      .then(res => {
+        dispatch(setLoadingState(false));
+        resolve();
+      })
       .catch(err => {
+        dispatch(setLoadingState(false));
         dispatch(addFlash('danger', err.message));
         reject();
       });
