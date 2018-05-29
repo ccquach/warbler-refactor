@@ -16,6 +16,7 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.1.0",
-    "sanitize-html": "^1.18.2"
+    "sanitize-html": "^1.18.2",
+    "twilio": "^3.17.1"
   }
 }

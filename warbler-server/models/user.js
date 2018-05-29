@@ -19,11 +19,24 @@ const userSchema = new mongoose.Schema({
   profileImageUrl: {
     type: String
   },
-  messages: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Message'
-  }]
+  phoneNumber: {
+    type: String,
+    set: toNumbers,
+    unique: true,
+    sparse: true
+  },
+  messages: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Message'
+    }
+  ]
 });
+
+function toNumbers(val) {
+  if (typeof val !== 'string') val = '';
+  return val.replace(/\D+/g, '');
+}
 
 userSchema.pre('save', async function(next) {
   try {
@@ -45,8 +58,8 @@ userSchema.methods.comparePassword = async function(candidatePassword, next) {
   } catch (err) {
     return next(err);
   }
-}
+};
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

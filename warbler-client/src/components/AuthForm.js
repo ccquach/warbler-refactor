@@ -6,22 +6,47 @@ import Loading from './Loading';
 class AuthForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: '',
-      username: props.currentUser ? props.currentUser.user.username : '',
-      password: '',
-      groupPassword: '',
-      profileImageUrl: props.currentUser
-        ? props.currentUser.user.profileImageUrl
-        : '',
-      changePassword: false
-    };
+    if (props.currentUser) {
+      let user = props.currentUser.user;
+      this.state = {
+        username: user.username,
+        profileImageUrl: user.profileImageUrl,
+        phoneNumber: user.phoneNumber,
+        smsEnabled: user.phoneNumber ? true : false,
+        changePassword: false
+      };
+    } else {
+      this.state = {
+        email: '',
+        username: '',
+        password: '',
+        groupPassword: '',
+        profileImageUrl: '',
+        phoneNumber: '',
+        smsEnabled: false
+      };
+    }
   }
 
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
+  };
+
+  handlePhoneChange = e => {
+    const val = e.target.value.replace(/[^0-9]/g, '');
+    this.setState({ phoneNumber: val });
+  };
+
+  handlePhoneCheckbox = e => {
+    this.setState({ smsEnabled: e.target.checked });
+    if (!e.target.checked) this.setState({ phoneNumber: '' });
+  };
+
+  handleChangePassword = e => {
+    e.preventDefault();
+    this.setState({ changePassword: !this.state.changePassword });
   };
 
   handleSubmit = e => {
@@ -48,13 +73,16 @@ class AuthForm extends Component {
       });
   };
 
-  handleChangePassword = e => {
-    e.preventDefault();
-    this.setState({ changePassword: !this.state.changePassword });
-  };
-
   render() {
-    const { email, username, profileImageUrl, changePassword } = this.state;
+    const {
+      email,
+      username,
+      profileImageUrl,
+      phoneNumber,
+      smsEnabled,
+      changePassword
+    } = this.state;
+
     const {
       heading,
       buttonText,
@@ -65,75 +93,113 @@ class AuthForm extends Component {
     } = this.props;
 
     return (
-      <div className="row justify-content-md-center text-center loading-wrapper">
+      <div className="row justify-content-md-center loading-wrapper">
         {isFetching ? <Loading /> : null}
         <div className="col-md-6">
           <form
             onSubmit={this.handleSubmit}
             style={{ opacity: isFetching ? 0.5 : 1 }}
           >
-            <h2>{heading}</h2>
+            <h2 className="text-center">{heading}</h2>
             {!updateUser && (
               <div>
-                <label htmlFor="email">Email</label>
-                <input
-                  className="form-control"
-                  id="email"
-                  name="email"
-                  onChange={this.handleChange}
-                  value={email}
-                  type="text"
-                />
-                <label htmlFor="password">Password</label>
-                <input
-                  className="form-control"
-                  id="password"
-                  name="password"
-                  onChange={this.handleChange}
-                  type="password"
-                />
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    className="form-control"
+                    id="email"
+                    name="email"
+                    onChange={this.handleChange}
+                    value={email}
+                    type="text"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    className="form-control"
+                    id="password"
+                    name="password"
+                    onChange={this.handleChange}
+                    type="password"
+                  />
+                </div>
               </div>
             )}
             {signUp && (
               <div>
-                <label htmlFor="group-password">Group Password</label>
-                <input
-                  className="form-control"
-                  id="group-password"
-                  name="groupPassword"
-                  onChange={this.handleChange}
-                  type="password"
-                />
+                <div className="form-group">
+                  <label htmlFor="group-password">Group Password</label>
+                  <input
+                    className="form-control"
+                    id="group-password"
+                    name="groupPassword"
+                    onChange={this.handleChange}
+                    type="password"
+                  />
+                </div>
               </div>
             )}
             {(signUp || updateUser) && (
               <div>
-                <label htmlFor="username">Username</label>
-                <input
-                  className="form-control"
-                  id="username"
-                  name="username"
-                  onChange={this.handleChange}
-                  value={username}
-                  type="text"
-                />
-                <label htmlFor="image-url">Image URL</label>
-                <input
-                  className="form-control"
-                  id="image-url"
-                  name="profileImageUrl"
-                  onChange={this.handleChange}
-                  value={profileImageUrl}
-                  type="text"
-                />
-                <label htmlFor="image-preview">Image Preview</label>
-                <img
-                  src={profileImageUrl || DefaultProfileImg}
-                  alt="avatar preview"
-                  className="img-thumbnail mx-auto d-block"
-                  width="200"
-                  height="200"
-                />
+                <div className="form-group">
+                  <label htmlFor="username">Username</label>
+                  <input
+                    className="form-control"
+                    id="username"
+                    name="username"
+                    onChange={this.handleChange}
+                    value={username}
+                    type="text"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="phoneNumber">SMS Phone #</label>
+                  <input
+                    className="form-control"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    onChange={this.handlePhoneChange}
+                    value={phoneNumber}
+                    disabled={!smsEnabled}
+                    type="text"
+                  />
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="phone-number-check"
+                      checked={smsEnabled}
+                      onChange={this.handlePhoneCheckbox}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="phone-number-check"
+                    >
+                      Enable SMS Notifications
+                    </label>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="image-url">Image URL</label>
+                  <input
+                    className="form-control"
+                    id="image-url"
+                    name="profileImageUrl"
+                    onChange={this.handleChange}
+                    value={profileImageUrl}
+                    type="text"
+                  />
+                </div>
+                <div className="form-group">
+                  <img
+                    src={profileImageUrl || DefaultProfileImg}
+                    alt="avatar preview"
+                    className="img-thumbnail mx-auto d-block"
+                    width="200"
+                    height="200"
+                  />
+                </div>
               </div>
             )}
             <button type="submit" className="btn btn-primary btn-block">

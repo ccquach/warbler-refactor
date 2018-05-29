@@ -10,12 +10,13 @@ exports.signup = async function(req, res, next) {
       });
     }
     let user = await db.User.create(req.body);
-    let { id, username, profileImageUrl } = user;
+    let { id, username, profileImageUrl, phoneNumber } = user;
     let token = jwt.sign(
       {
         id,
         username,
-        profileImageUrl
+        profileImageUrl,
+        phoneNumber
       },
       process.env.SECRET_KEY
     );
@@ -23,11 +24,12 @@ exports.signup = async function(req, res, next) {
       id,
       username,
       profileImageUrl,
+      phoneNumber,
       token
     });
   } catch (err) {
     if (err.code === 11000) {
-      err.message = 'Sorry, that username and/or email is taken';
+      err.message = 'Sorry, that username/email/phone number is taken.';
     }
     return next({
       status: 400,
@@ -41,14 +43,15 @@ exports.signin = async function(req, res, next) {
     let user = await db.User.findOne({
       email: req.body.email
     });
-    let { id, username, profileImageUrl } = user;
+    let { id, username, profileImageUrl, phoneNumber } = user;
     let isMatch = await user.comparePassword(req.body.password);
     if (isMatch) {
       let token = jwt.sign(
         {
           id,
           username,
-          profileImageUrl
+          profileImageUrl,
+          phoneNumber
         },
         process.env.SECRET_KEY
       );
@@ -56,6 +59,7 @@ exports.signin = async function(req, res, next) {
         id,
         username,
         profileImageUrl,
+        phoneNumber,
         token
       });
     } else {
@@ -78,19 +82,21 @@ exports.updateUser = async function(req, res, next) {
       req.params.id,
       {
         username: req.body.username,
-        profileImageUrl: req.body.profileImageUrl
+        profileImageUrl: req.body.profileImageUrl,
+        phoneNumber: req.body.phoneNumber
       },
       {
         new: true,
         runValidators: true
       }
     );
-    let { id, username, profileImageUrl } = user;
+    let { id, username, profileImageUrl, phoneNumber } = user;
     let token = jwt.sign(
       {
         id,
         username,
-        profileImageUrl
+        profileImageUrl,
+        phoneNumber
       },
       process.env.SECRET_KEY
     );
@@ -98,11 +104,12 @@ exports.updateUser = async function(req, res, next) {
       id,
       username,
       profileImageUrl,
+      phoneNumber,
       token
     });
   } catch (err) {
     if (err.code === 11000) {
-      err.message = 'Sorry, that username and/or email is taken';
+      err.message = 'Sorry, that username/email/phone number is taken.';
     }
     return next({
       status: 400,
