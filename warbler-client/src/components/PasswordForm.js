@@ -25,31 +25,37 @@ class PasswordForm extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <h5>Update Password</h5>
-        <label htmlFor="oldPassword">Old Password</label>
-        <input
-          id="oldPassword"
-          name="oldPassword"
-          onChange={this.handleChange}
-          type="password"
-          className="form-control"
-        />
-        <label htmlFor="newPassword">New Password</label>
-        <input
-          id="newPassword"
-          name="newPassword"
-          onChange={this.handleChange}
-          type="password"
-          className="form-control"
-        />
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-          id="confirmPassword"
-          name="confirmPassword"
-          onChange={this.handleChange}
-          type="password"
-          className="form-control"
-        />
+        <h5 style={{ textAlign: 'center' }}>Update Password</h5>
+        <div className="form-group">
+          <label htmlFor="oldPassword">Old Password</label>
+          <input
+            id="oldPassword"
+            name="oldPassword"
+            onChange={this.handleChange}
+            type="password"
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="newPassword">New Password</label>
+          <input
+            id="newPassword"
+            name="newPassword"
+            onChange={this.handleChange}
+            type="password"
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            onChange={this.handleChange}
+            type="password"
+            className="form-control"
+          />
+        </div>
         <button type="submit" className="btn btn-block btn-outline-danger">
           Change Password
         </button>
