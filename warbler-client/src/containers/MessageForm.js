@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postNewMessage } from '../store/actions/messages';
-import Loading from '../components/Loading';
+import { postNewMessage, fetchMessages } from '../store/actions/messages';
+import CharButton from '../components/CharButton';
 
 class MessageForm extends Component {
   constructor(props) {
@@ -15,7 +15,10 @@ class MessageForm extends Component {
     e.preventDefault();
     this.props
       .postNewMessage(this.state.message)
-      .then(() => this.props.history.push('/'))
+      .then(() => {
+        this.setState({ message: '' });
+        this.props.fetchMessages();
+      })
       .catch(() => {
         return;
       });
@@ -23,32 +26,44 @@ class MessageForm extends Component {
 
   render() {
     const { isFetching } = this.props;
+
+    const textAreaStyle = {
+      resize: 'none'
+    };
+
+    const buttonStyle = {
+      position: 'absolute',
+      top: 6,
+      right: 35
+    };
+
     return (
-      <div className="offset-2 col-md-8 loading-wrapper">
-        {isFetching ? <Loading /> : null}
+      <div className="col-sm-12 offset-md-1 col-md-10">
         <form
           onSubmit={this.handleNewMessage}
           style={{ opacity: isFetching ? 0.5 : 1 }}
         >
           <textarea
+            style={textAreaStyle}
+            rows="3"
             maxLength="160"
             className="form-control"
             value={this.state.message}
             onChange={e => this.setState({ message: e.target.value })}
+            autoComplete="false"
+            autoCapitalize="none"
+            autoFocus="true"
+            placeholder="Hello world!"
           />
-          <button type="submit" className="btn btn-success float-right">
-            Add my message!
-          </button>
+          <CharButton
+            buttonType="submit"
+            buttonChar="\u002B"
+            buttonStyle={buttonStyle}
+          />
         </form>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    isFetching: state.loading.isFetching
-  };
-}
-
-export default connect(mapStateToProps, { postNewMessage })(MessageForm);
+export default connect(null, { postNewMessage, fetchMessages })(MessageForm);

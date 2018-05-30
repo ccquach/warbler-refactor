@@ -6,7 +6,6 @@ import AuthForm from '../components/AuthForm';
 import { authUser, updatePassword } from '../store/actions/auth';
 import { removeFlash } from '../store/actions/flash';
 import withAuth from '../hocs/withAuth';
-import MessageForm from './MessageForm';
 import FlashMessage from './FlashMessage';
 import Scale from '../components/animations/Scale';
 
@@ -64,10 +63,6 @@ const Main = props => {
               />
             );
           }}
-        />
-        <Route
-          path="/users/:id/messages/new"
-          component={withAuth({})(MessageForm)}
         />
         <Route
           path="/users/:id/settings"

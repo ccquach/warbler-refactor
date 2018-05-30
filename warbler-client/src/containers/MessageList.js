@@ -23,13 +23,13 @@ class MessageList extends Component {
   render() {
     const { messages, removeMessage, currentUser, isFetching } = this.props;
     return (
-      <div className="col-sm-12 col-md-8 loading-wrapper">
+      <div>
         {isFetching ? <Loading /> : null}
         <div className="col-sm-12 offset-md-1 col-md-10">
           <ul
             className="list-group"
             id="messages"
-            style={{ opacity: isFetching ? 0.5 : 1 }}
+            style={{ opacity: isFetching ? 0.5 : 1, width: '100%' }}
           >
             <TransitionMotion
               willEnter={this.willEnter}
