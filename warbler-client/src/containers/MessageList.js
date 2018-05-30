@@ -23,9 +23,9 @@ class MessageList extends Component {
   render() {
     const { messages, removeMessage, currentUser, isFetching } = this.props;
     return (
-      <div className="col-sm-8 loading-wrapper">
+      <div className="col-sm-12 col-md-8 loading-wrapper">
         {isFetching ? <Loading /> : null}
-        <div className="offset-1 col-sm-10">
+        <div className="col-sm-12 offset-md-1 col-md-10">
           <ul
             className="list-group"
             id="messages"
