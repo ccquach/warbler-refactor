@@ -43,7 +43,12 @@ class App extends Component {
               closePanel={this.closePanel}
               togglePanel={this.togglePanel}
             />
-            <Main mainStyle={{ opacity: panelOpen ? 0.5 : 1 }} />
+            <Main
+              mainStyle={{
+                opacity: panelOpen ? 0.5 : 1,
+                pointerEvents: panelOpen ? 'none' : 'auto'
+              }}
+            />
           </div>
         </Router>
       </Provider>
