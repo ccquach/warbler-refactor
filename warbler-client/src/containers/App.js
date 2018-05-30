@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '../store';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -18,15 +18,37 @@ if (localStorage.jwtToken) {
   }
 }
 
-const App = () => (
-  <Provider store={store}>
-    <Router>
-      <div className="onboarding">
-        <Navbar />
-        <Main />
-      </div>
-    </Router>
-  </Provider>
-);
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { panelOpen: false };
+  }
+
+  closePanel = () => {
+    this.setState({ panelOpen: false });
+  };
+
+  togglePanel = e => {
+    this.setState({ panelOpen: !this.state.panelOpen });
+  };
+
+  render() {
+    const { panelOpen } = this.state;
+    return (
+      <Provider store={store}>
+        <Router>
+          <div className="onboarding">
+            <Navbar
+              panelOpen={panelOpen}
+              closePanel={this.closePanel}
+              togglePanel={this.togglePanel}
+            />
+            <Main mainStyle={{ opacity: panelOpen ? 0.5 : 1 }} />
+          </div>
+        </Router>
+      </Provider>
+    );
+  }
+}
 
 export default App;

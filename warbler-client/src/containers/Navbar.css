@@ -2,6 +2,7 @@
 
 .navbar a,
 .navbar a:not([href]):not([tabindex]) {
+  font-size: 18px;
   font-weight: bold;
   color: white;
 }
@@ -50,8 +51,8 @@ ul.nav.navbar-nav li {
 }
 
 .onboarding > .navbar {
-  background-image: url('../images/nav-bg.png');
   background-size: 100% 100%;
+  background-color: rgba(230, 236, 240, 0.5);
 }
 
 /* Panel Toggle */

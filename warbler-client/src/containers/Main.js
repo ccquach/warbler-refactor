@@ -17,7 +17,8 @@ const Main = props => {
     updatePassword,
     flash,
     history,
-    isFetching
+    isFetching,
+    mainStyle
   } = props;
 
   history.listen(() => {
@@ -25,7 +26,7 @@ const Main = props => {
   });
 
   return (
-    <div className="container">
+    <div className="container" style={mainStyle}>
       <Scale el="flash">{flash.message && <FlashMessage />}</Scale>
       <Switch>
         <Route

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Logo from '../images/warbler-logo.png';
 import { logout } from '../store/actions/auth';
 import { Motion, spring } from 'react-motion';
+import NavbarBackgroundImg from '../images/nav-bg.png';
 import './Navbar.css';
 
 const panelStyle = {
@@ -17,45 +18,45 @@ const panelStyle = {
   alignItems: 'center',
   justifyContent: 'flex-start',
   height: '100vh',
-  background: 'rgba(85, 223, 189, 0.8)',
+  background: 'rgb(85, 223, 189)',
   zIndex: 98,
   paddingTop: 90
 };
 
 class Navbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { panelOpen: false };
-  }
-
   logout = e => {
     e.preventDefault();
     this.props.logout();
     this.props.history.push('/');
-    this.closePanel();
-  };
-
-  closePanel = () => {
-    this.setState({ panelOpen: false });
-  };
-
-  togglePanel = e => {
-    this.setState({ panelOpen: !this.state.panelOpen });
+    this.props.closePanel();
   };
 
   render() {
-    const { panelOpen } = this.state;
-    const { currentUser, history } = this.props;
+    const {
+      currentUser,
+      history,
+      panelOpen,
+      closePanel,
+      togglePanel
+    } = this.props;
 
     history.listen(() => {
-      this.closePanel();
+      closePanel();
     });
 
     return (
-      <nav className="navbar navbar-expand">
+      <nav
+        className="navbar navbar-expand"
+        style={{
+          backgroundImage: panelOpen ? 'none' : `url(${NavbarBackgroundImg})`
+        }}
+      >
         <div className="container-fluid">
           {/* Logo */}
-          <div className="navbar-header">
+          <div
+            className="navbar-header"
+            style={{ opacity: panelOpen ? 0.5 : 1 }}
+          >
             <Link to="/" className="navbar-brand">
               <span className="navbar-img-helper" />
               <img src={Logo} alt="Warbler Home" />
@@ -66,7 +67,7 @@ class Navbar extends Component {
           <div
             id="hamburger"
             className={`hamburglar ${panelOpen ? 'is-open' : 'is-closed'}`}
-            onClick={this.togglePanel}
+            onClick={togglePanel}
           >
             <div className="burger-icon">
               <div className="burger-container">
@@ -127,6 +128,9 @@ class Navbar extends Component {
                   <div>
                     {currentUser.isAuthenticated ? (
                       <ul className="nav navbar-nav navbar-right">
+                        <li>
+                          <Link to="/">Home</Link>
+                        </li>
                         <li>
                           <Link to={`/users/${currentUser.user.id}/settings`}>
                             Account
