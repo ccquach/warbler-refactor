@@ -6,42 +6,6 @@ body {
   margin-top: 1rem;
 }
 
-/* Nav */
-
-.navbar a,
-.navbar a:not([href]):not([tabindex]) {
-  font-weight: bold;
-  color: white;
-}
-
-.navbar a:hover,
-.navbar a:not([href]):not([tabindex]):hover {
-  color: white;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.navbar-brand > img {
-  display: inline-block;
-  width: 20px;
-  margin-bottom: 2px;
-  margin-right: 5px;
-  border-radius: 2px;
-}
-
-ul.nav.navbar-nav li {
-  margin: 0 0.5rem;
-}
-
-.onboarding > .navbar {
-  background-image: url('./images/nav-bg.png');
-  background-size: 100% 100%;
-}
-
-.navbar-header {
-  margin: 0 auto;
-}
-
 /* Homepage */
 
 .home-hero {
@@ -129,7 +93,7 @@ form a:not([href]):not([tabindex]):hover {
   margin: -16px 0 0 -16px;
 }
 
-svg {
+#bird-loading-svg {
   position: relative;
   z-index: 10;
   height: 40px;
