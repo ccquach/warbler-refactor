@@ -128,13 +128,6 @@ class Navbar extends Component {
                     {currentUser.isAuthenticated ? (
                       <ul className="nav navbar-nav navbar-right">
                         <li>
-                          <Link
-                            to={`/users/${currentUser.user.id}/messages/new`}
-                          >
-                            New Message
-                          </Link>
-                        </li>
-                        <li>
                           <Link to={`/users/${currentUser.user.id}/settings`}>
                             Account
                           </Link>
