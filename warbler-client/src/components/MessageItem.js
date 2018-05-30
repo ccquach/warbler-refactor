@@ -1,7 +1,7 @@
 import React from 'react';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
-import CloseButton from './CloseButton';
+import CharButton from './CharButton';
 import DefaultProfileImg from '../images/default-profile-image.jpg';
 
 const MessageItem = ({
@@ -33,7 +33,13 @@ const MessageItem = ({
           <p>{text}</p>
         </div>
       </div>
-      {isCorrectUser && <CloseButton onClose={removeMessage} />}
+      {isCorrectUser && (
+        <CharButton
+          buttonType="button"
+          buttonChar="\u00D7"
+          onClose={removeMessage}
+        />
+      )}
     </li>
   </div>
 );
