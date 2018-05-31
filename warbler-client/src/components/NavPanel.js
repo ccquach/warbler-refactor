@@ -8,6 +8,11 @@ class NavPanel extends Component {
     this.props.closePanel();
   };
 
+  handleLogout = e => {
+    e.preventDefault();
+    this.props.onLogout();
+  };
+
   render() {
     const { currentUser, panelOpen, togglePanel } = this.props;
 
@@ -104,7 +109,7 @@ class NavPanel extends Component {
                         </Link>
                       </li>
                       <li>
-                        <a onClick={this.logout}>Log out</a>
+                        <a onClick={this.handleLogout}>Log out</a>
                       </li>
                     </ul>
                   ) : (

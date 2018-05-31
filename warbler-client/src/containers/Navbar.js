@@ -8,8 +8,7 @@ import NavbarBackgroundImg from '../images/nav-bg.png';
 import './Navbar.css';
 
 class Navbar extends Component {
-  logout = e => {
-    e.preventDefault();
+  logout = () => {
     this.props.logout();
     this.props.history.push('/');
     this.props.closePanel();
@@ -55,6 +54,7 @@ class Navbar extends Component {
             panelOpen={panelOpen}
             closePanel={closePanel}
             togglePanel={togglePanel}
+            onLogout={this.logout}
           />
         </div>
       </nav>
