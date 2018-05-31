@@ -6,7 +6,7 @@ import withAuth from '../hocs/withAuth';
 
 const MessageTimeline = ({ profileImageUrl, username }) => {
   return (
-    <div className="row">
+    <div className="row d-flex justify-content-sm-center">
       <UserAside profileImageUrl={profileImageUrl} username={username} />
       <div className="col-sm-12 col-md-8 loading-wrapper">
         <MessageForm />
