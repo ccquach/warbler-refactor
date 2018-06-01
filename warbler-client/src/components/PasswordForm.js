@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 
 class PasswordForm extends Component {
   constructor(props) {
@@ -19,7 +18,7 @@ class PasswordForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.handleChangePassword(this.state, this.props.currentUser.user.id);
+    this.props.handleChangePassword(this.state);
   };
 
   render() {
@@ -64,4 +63,4 @@ class PasswordForm extends Component {
   }
 }
 
-export default withRouter(PasswordForm);
+export default PasswordForm;

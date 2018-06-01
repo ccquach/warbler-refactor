@@ -11,7 +11,7 @@ class AuthForm extends Component {
       this.state = {
         username: user.username,
         profileImageUrl: user.profileImageUrl,
-        phoneNumber: user.phoneNumber,
+        phoneNumber: user.phoneNumber ? user.phoneNumber : '',
         smsEnabled: user.phoneNumber ? true : false,
         changePassword: false
       };
@@ -57,11 +57,7 @@ class AuthForm extends Component {
         ? 'updateUser'
         : 'signin';
     this.props
-      .onAuth(
-        authType,
-        this.state,
-        this.props.currentUser ? this.props.currentUser.user.id : null
-      )
+      .onAuth(authType, this.state)
       .then(() => {
         if (!this.props.updateUser) {
           this.props.history.push('/');
@@ -83,14 +79,7 @@ class AuthForm extends Component {
       changePassword
     } = this.state;
 
-    const {
-      heading,
-      buttonText,
-      signUp,
-      updateUser,
-      currentUser,
-      isFetching
-    } = this.props;
+    const { heading, buttonText, signUp, updateUser, isFetching } = this.props;
 
     return (
       <div className="row justify-content-md-center loading-wrapper">
@@ -212,10 +201,7 @@ class AuthForm extends Component {
             )}
           </form>
           {changePassword && (
-            <PasswordForm
-              handleChangePassword={this.props.onChangePassword}
-              currentUser={currentUser}
-            />
+            <PasswordForm handleChangePassword={this.props.onChangePassword} />
           )}
         </div>
       </div>
