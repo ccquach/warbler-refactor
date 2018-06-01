@@ -78,18 +78,11 @@ exports.signin = async function(req, res, next) {
 
 exports.updateUser = async function(req, res, next) {
   try {
-    let user = await db.User.findByIdAndUpdate(
-      req.params.id,
-      {
-        username: req.body.username,
-        profileImageUrl: req.body.profileImageUrl,
-        phoneNumber: req.body.phoneNumber
-      },
-      {
-        new: true,
-        runValidators: true
-      }
-    );
+    let user = await db.User.findById(req.params.id);
+    user.username = req.body.username;
+    user.profileImageUrl = req.body.profileImageUrl;
+    user.phoneNumber = req.body.phoneNumber;
+    await user.save();
     let { id, username, profileImageUrl, phoneNumber } = user;
     let token = jwt.sign(
       {

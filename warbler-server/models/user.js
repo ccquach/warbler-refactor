@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     set: toNumbers,
     unique: true,
-    sparse: true
+    sparse: true,
+    set: skipEmpty
   },
   messages: [
     {
@@ -36,6 +37,11 @@ const userSchema = new mongoose.Schema({
 function toNumbers(val) {
   if (typeof val !== 'string') val = '';
   return val.replace(/\D+/g, '');
+}
+
+function skipEmpty(val) {
+  if (val.length === 0) return undefined;
+  return val;
 }
 
 userSchema.pre('save', async function(next) {
