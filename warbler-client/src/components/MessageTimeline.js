@@ -16,4 +16,4 @@ const MessageTimeline = ({ profileImageUrl, username }) => {
   );
 };
 
-export default withAuth({})(MessageTimeline);
+export default withAuth(MessageTimeline);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-const withAuth = injectedProps => ComponentToBeRendered => {
+function withAuth(ComponentToBeRendered) {
   class Authenticate extends Component {
     componentWillMount() {
       if (!this.props.isAuthenticated) {
@@ -14,7 +14,7 @@ const withAuth = injectedProps => ComponentToBeRendered => {
       }
     }
     render() {
-      return <ComponentToBeRendered {...injectedProps} {...this.props} />;
+      return <ComponentToBeRendered {...this.props} />;
     }
   }
 
@@ -25,6 +25,6 @@ const withAuth = injectedProps => ComponentToBeRendered => {
   }
 
   return connect(mapStateToProps)(Authenticate);
-};
+}
 
 export default withAuth;

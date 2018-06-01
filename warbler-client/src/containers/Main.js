@@ -9,6 +9,8 @@ import withAuth from '../hocs/withAuth';
 import FlashMessage from './FlashMessage';
 import Scale from '../components/animations/Scale';
 
+const AuthenticatedUserSettings = withAuth(AuthForm);
+
 const Main = props => {
   const {
     currentUser,
@@ -37,45 +39,43 @@ const Main = props => {
         <Route
           exact
           path="/signin"
-          render={props => {
-            return (
-              <AuthForm
-                onAuth={authUser}
-                buttonText="Log in"
-                heading="Welcome back!"
-                isFetching={isFetching}
-                {...props}
-              />
-            );
-          }}
+          render={props => (
+            <AuthForm
+              onAuth={authUser}
+              buttonText="Log in"
+              heading="Welcome back!"
+              isFetching={isFetching}
+              {...props}
+            />
+          )}
         />
         <Route
           exact
           path="/signup"
-          render={props => {
-            return (
-              <AuthForm
-                onAuth={authUser}
-                signUp
-                buttonText="Sign me up!"
-                heading="Join Warbler today!"
-                isFetching={isFetching}
-                {...props}
-              />
-            );
-          }}
+          render={props => (
+            <AuthForm
+              onAuth={authUser}
+              signUp
+              buttonText="Sign me up!"
+              heading="Join Warbler today!"
+              isFetching={isFetching}
+              {...props}
+            />
+          )}
         />
         <Route
           path="/users/:id/settings"
-          component={withAuth({
-            onAuth: authUser,
-            onChangePassword: updatePassword,
-            updateUser: true,
-            currentUser,
-            buttonText: 'Save Changes',
-            heading: 'Account Settings',
-            isFetching
-          })(AuthForm)}
+          render={() => (
+            <AuthenticatedUserSettings
+              onAuth={authUser}
+              onChangePassword={updatePassword}
+              updateUser={true}
+              currentUser={currentUser}
+              buttonText="Save Changes"
+              heading="Account Settings"
+              isFetching={isFetching}
+            />
+          )}
         />
       </Switch>
     </div>
