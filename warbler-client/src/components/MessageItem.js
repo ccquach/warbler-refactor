@@ -11,6 +11,7 @@ const MessageItem = ({
   username,
   removeMessage,
   isCorrectUser,
+  onSelectUser,
   style
 }) => (
   <div style={style}>
@@ -24,7 +25,9 @@ const MessageItem = ({
           className="timeline-image"
         />
         <div className="message-area">
-          <Link to="/">@{username} &nbsp;</Link>
+          <Link to={`/users/${username}`} onClick={onSelectUser}>
+            @{username} &nbsp;
+          </Link>
           <span className="text-muted">
             <Moment className="text-muted" format="Do MMM YYYY">
               {date}

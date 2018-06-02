@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { fetchMessages, removeMessage } from '../store/actions/messages';
 import MessageItem from '../components/MessageItem';
 import { spring, TransitionMotion } from 'react-motion';
 import Loading from '../components/Loading';
+import { getFilteredDataByUser } from '../utils/filters';
+import { setActiveProfile } from '../store/actions/activeProfile';
 
 class MessageList extends Component {
   componentDidMount() {
@@ -21,7 +24,18 @@ class MessageList extends Component {
   });
 
   render() {
-    const { messages, removeMessage, currentUser, isFetching } = this.props;
+    const {
+      messages,
+      filteredData,
+      removeMessage,
+      currentUser,
+      isFetching,
+      setActiveProfile,
+      location
+    } = this.props;
+
+    const messageList = location.pathname === '/' ? messages : filteredData;
+
     return (
       <div>
         {isFetching ? <Loading /> : null}
@@ -34,7 +48,7 @@ class MessageList extends Component {
             <TransitionMotion
               willEnter={this.willEnter}
               willLeave={this.willLeave}
-              styles={messages.map(m => ({
+              styles={messageList.map(m => ({
                 key: m._id,
                 style: {
                   translateY: spring(0),
@@ -63,6 +77,7 @@ class MessageList extends Component {
                           data._id
                         )}
                         isCorrectUser={currentUser === data.user._id}
+                        onSelectUser={setActiveProfile.bind(this, data.user)}
                       />
                     ))}
                   </div>
@@ -82,10 +97,18 @@ function mapStateToProps(state) {
   return {
     messages: state.messages,
     currentUser: state.currentUser.user.id,
+    filteredData: getFilteredDataByUser(
+      state.messages,
+      state.activeProfile._id
+    ),
     isFetching: state.loading.isFetching
   };
 }
 
-export default connect(mapStateToProps, { fetchMessages, removeMessage })(
-  MessageList
+export default withRouter(
+  connect(mapStateToProps, {
+    fetchMessages,
+    removeMessage,
+    setActiveProfile
+  })(MessageList)
 );

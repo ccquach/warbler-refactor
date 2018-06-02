@@ -1,4 +1,5 @@
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const SET_ACTIVE_PROFILE = 'SET_ACTIVE_PROFILE';
 export const LOAD_MESSAGES = 'LOAD_MESSAGES';
 export const REMOVE_MESSAGE = 'REMOVE_MESSAGE';
 export const ADD_FLASH = 'ADD_FLASH';

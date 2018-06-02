@@ -8,6 +8,7 @@ import { removeFlash } from '../store/actions/flash';
 import withAuth from '../hocs/withAuth';
 import FlashMessage from './FlashMessage';
 import Scale from '../components/animations/Scale';
+import MessageTimeline from '../components/MessageTimeline';
 
 const AuthenticatedUserSettings = withAuth(AuthForm);
 
@@ -20,9 +21,11 @@ const Main = props => {
     flash,
     history,
     isFetching,
-    mainStyle
+    mainStyle,
+    activeProfile
   } = props;
 
+  // remove flash on route change
   history.listen(() => {
     removeFlash();
   });
@@ -77,6 +80,10 @@ const Main = props => {
             />
           )}
         />
+        <Route
+          path="/users/:username"
+          render={() => <MessageTimeline activeProfile={activeProfile} />}
+        />
       </Switch>
     </div>
   );
@@ -86,10 +93,15 @@ function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
     flash: state.flash,
-    isFetching: state.loading.isFetching
+    isFetching: state.loading.isFetching,
+    activeProfile: state.activeProfile
   };
 }
 
 export default withRouter(
-  connect(mapStateToProps, { authUser, removeFlash, updatePassword })(Main)
+  connect(mapStateToProps, {
+    authUser,
+    removeFlash,
+    updatePassword
+  })(Main)
 );
