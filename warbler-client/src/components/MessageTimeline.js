@@ -4,13 +4,19 @@ import UserAside from './UserAside';
 import MessageForm from '../containers/MessageForm';
 import withAuth from '../hocs/withAuth';
 
-const MessageTimeline = ({ profileImageUrl, username, activeProfile }) => (
+const MessageTimeline = ({
+  profileImageUrl,
+  username,
+  biography,
+  activeProfile
+}) => (
   <div className="row d-flex justify-content-sm-center">
     <UserAside
       profileImageUrl={
         activeProfile ? activeProfile.profileImageUrl : profileImageUrl
       }
       username={activeProfile ? activeProfile.username : username}
+      biography={activeProfile ? activeProfile.biography : biography}
     />
     <div className="col-sm-12 col-md-8 loading-wrapper">
       {!activeProfile && (

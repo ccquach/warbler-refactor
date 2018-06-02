@@ -10,6 +10,7 @@ class AuthForm extends Component {
       let user = props.currentUser.user;
       this.state = {
         username: user.username,
+        biography: user.biography,
         profileImageUrl: user.profileImageUrl,
         phoneNumber: user.phoneNumber ? user.phoneNumber : '',
         smsEnabled: user.phoneNumber ? true : false,
@@ -21,6 +22,7 @@ class AuthForm extends Component {
         username: '',
         password: '',
         groupPassword: '',
+        biography: '',
         profileImageUrl: '',
         phoneNumber: '',
         smsEnabled: false
@@ -73,13 +75,40 @@ class AuthForm extends Component {
     const {
       email,
       username,
+      password,
+      groupPassword,
+      biography,
       profileImageUrl,
       phoneNumber,
       smsEnabled,
       changePassword
     } = this.state;
 
-    const { heading, buttonText, signUp, updateUser, isFetching } = this.props;
+    const {
+      heading,
+      buttonText,
+      signUp,
+      updateUser,
+      isFetching,
+      history
+    } = this.props;
+
+    // reset form on route change between signup/login
+    history.listen(() => {
+      if (!updateUser) {
+        console.log('hit reset');
+        this.setState({
+          email: '',
+          username: '',
+          password: '',
+          groupPassword: '',
+          biography: '',
+          profileImageUrl: '',
+          phoneNumber: '',
+          smsEnabled: false
+        });
+      }
+    });
 
     return (
       <div className="row justify-content-md-center loading-wrapper">
@@ -110,6 +139,7 @@ class AuthForm extends Component {
                     id="password"
                     name="password"
                     onChange={this.handleChange}
+                    value={password}
                     type="password"
                   />
                 </div>
@@ -124,6 +154,7 @@ class AuthForm extends Component {
                     id="group-password"
                     name="groupPassword"
                     onChange={this.handleChange}
+                    value={groupPassword}
                     type="password"
                   />
                 </div>
@@ -168,6 +199,22 @@ class AuthForm extends Component {
                       Enable SMS Notifications
                     </label>
                   </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="biography">Bio</label>
+                  <textarea
+                    style={{ resize: 'none' }}
+                    rows="3"
+                    maxLength="160"
+                    className="form-control"
+                    id="biography"
+                    name="biography"
+                    onChange={this.handleChange}
+                    value={biography}
+                    autoComplete="false"
+                    autoCapitalize="none"
+                    placeholder="This is me :)"
+                  />
                 </div>
                 <div className="form-group">
                   <label htmlFor="image-url">Image URL</label>

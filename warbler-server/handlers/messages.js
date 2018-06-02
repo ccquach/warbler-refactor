@@ -17,6 +17,7 @@ exports.createMessage = async function(req, res, next) {
     // return new message
     let foundMessage = await db.Message.findById(message._id).populate('user', {
       username: true,
+      biography: true,
       profileImageUrl: true
     });
     // send sms

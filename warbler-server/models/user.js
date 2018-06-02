@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const sanitize = require('sanitize-html');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -16,15 +17,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  biography: {
+    type: String,
+    maxLength: 160
+  },
   profileImageUrl: {
     type: String
   },
   phoneNumber: {
     type: String,
     set: toNumbers,
+    set: skipEmpty,
     unique: true,
-    sparse: true,
-    set: skipEmpty
+    sparse: true
   },
   messages: [
     {
@@ -46,6 +51,16 @@ function skipEmpty(val) {
 
 userSchema.pre('save', async function(next) {
   try {
+    // throw error if possible malicious string provided
+    this.schema.eachPath(path => {
+      if (this[path] && this[path].length) {
+        if (this[path] !== sanitize(this[path])) {
+          let err = new Error('Invalid text input.');
+          return next(err);
+        }
+      }
+    });
+    // hash password
     if (!this.isModified('password')) {
       return next();
     }

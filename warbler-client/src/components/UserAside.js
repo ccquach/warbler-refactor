@@ -1,7 +1,7 @@
 import React from 'react';
 import DefaultProfileImg from '../images/default-profile-image.jpg';
 
-const UserAside = ({ profileImageUrl, username }) => (
+const UserAside = ({ profileImageUrl, username, biography }) => (
   <aside className="col-sm-10 col-md-3 mb-4">
     <div className="card">
       <img
@@ -13,11 +13,7 @@ const UserAside = ({ profileImageUrl, username }) => (
       />
       <div className="card-body">
         <h5 className="card-title">@{username}</h5>
-        <p className="card-text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam euismod
-          id ipsum eu pretium. Integer in dui non purus congue iaculis in in
-          velit.
-        </p>
+        <p className="card-text">{biography}</p>
       </div>
     </div>
   </aside>

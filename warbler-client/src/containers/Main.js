@@ -77,6 +77,7 @@ const Main = props => {
               buttonText="Save Changes"
               heading="Account Settings"
               isFetching={isFetching}
+              {...props}
             />
           )}
         />

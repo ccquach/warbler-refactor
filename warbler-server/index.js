@@ -29,6 +29,7 @@ app.get('/api/messages', loginRequired, async function(req, res, next) {
       .sort({ createdAt: 'desc' })
       .populate('user', {
         username: true,
+        biography: true,
         profileImageUrl: true
       });
     return res.status(200).json(messages);

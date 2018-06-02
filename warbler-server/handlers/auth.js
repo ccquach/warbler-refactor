@@ -10,11 +10,12 @@ exports.signup = async function(req, res, next) {
       });
     }
     let user = await db.User.create(req.body);
-    let { id, username, profileImageUrl, phoneNumber } = user;
+    let { id, username, biography, profileImageUrl, phoneNumber } = user;
     let token = jwt.sign(
       {
         id,
         username,
+        biography,
         profileImageUrl,
         phoneNumber
       },
@@ -23,6 +24,7 @@ exports.signup = async function(req, res, next) {
     return res.status(200).json({
       id,
       username,
+      biography,
       profileImageUrl,
       phoneNumber,
       token
@@ -43,13 +45,14 @@ exports.signin = async function(req, res, next) {
     let user = await db.User.findOne({
       email: req.body.email
     });
-    let { id, username, profileImageUrl, phoneNumber } = user;
+    let { id, username, biography, profileImageUrl, phoneNumber } = user;
     let isMatch = await user.comparePassword(req.body.password);
     if (isMatch) {
       let token = jwt.sign(
         {
           id,
           username,
+          biography,
           profileImageUrl,
           phoneNumber
         },
@@ -58,6 +61,7 @@ exports.signin = async function(req, res, next) {
       return res.status(200).json({
         id,
         username,
+        biography,
         profileImageUrl,
         phoneNumber,
         token
@@ -80,14 +84,16 @@ exports.updateUser = async function(req, res, next) {
   try {
     let user = await db.User.findById(req.params.id);
     user.username = req.body.username;
+    user.biography = req.body.biography;
     user.profileImageUrl = req.body.profileImageUrl;
     user.phoneNumber = req.body.phoneNumber;
     await user.save();
-    let { id, username, profileImageUrl, phoneNumber } = user;
+    let { id, username, biography, profileImageUrl, phoneNumber } = user;
     let token = jwt.sign(
       {
         id,
         username,
+        biography,
         profileImageUrl,
         phoneNumber
       },
@@ -96,6 +102,7 @@ exports.updateUser = async function(req, res, next) {
     return res.status(200).json({
       id,
       username,
+      biography,
       profileImageUrl,
       phoneNumber,
       token
