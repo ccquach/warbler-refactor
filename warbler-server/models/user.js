@@ -53,7 +53,7 @@ userSchema.pre('save', async function(next) {
   try {
     // throw error if possible malicious string provided
     this.schema.eachPath(path => {
-      if (this[path] && this[path].length) {
+      if (this[path] && this[path].length && path !== 'messages') {
         if (this[path] !== sanitize(this[path])) {
           let err = new Error('Invalid text input.');
           return next(err);
