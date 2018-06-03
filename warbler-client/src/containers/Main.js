@@ -9,6 +9,7 @@ import withAuth from '../hocs/withAuth';
 import FlashMessage from './FlashMessage';
 import Scale from '../components/animations/Scale';
 import MessageTimeline from '../components/MessageTimeline';
+import { setActiveProfile } from '../store/actions/activeProfile';
 import NotFound from '../components/NotFound';
 
 const AuthenticatedUserSettings = withAuth(AuthForm);
@@ -23,7 +24,8 @@ const Main = props => {
     history,
     isFetching,
     mainStyle,
-    activeProfile
+    activeProfile,
+    setActiveProfile
   } = props;
 
   // remove flash on route change
@@ -38,7 +40,13 @@ const Main = props => {
         <Route
           exact
           path="/"
-          render={props => <Homepage currentUser={currentUser} {...props} />}
+          render={props => (
+            <Homepage
+              currentUser={currentUser}
+              onSelectUser={setActiveProfile.bind(this, currentUser.user)}
+              {...props}
+            />
+          )}
         />
         <Route
           exact
@@ -105,6 +113,7 @@ export default withRouter(
   connect(mapStateToProps, {
     authUser,
     removeFlash,
-    updatePassword
+    updatePassword,
+    setActiveProfile
   })(Main)
 );

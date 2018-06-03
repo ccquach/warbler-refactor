@@ -38,7 +38,7 @@ export const fetchMessages = () => {
 
 export const postNewMessage = text => (dispatch, getState) => {
   let { currentUser } = getState();
-  const id = currentUser.user.id;
+  const id = currentUser.user._id;
   dispatch(setLoadingState(true));
   return new Promise((resolve, reject) => {
     return apiCall('post', `/api/users/${id}/messages`, { text })

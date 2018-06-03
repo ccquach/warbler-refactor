@@ -8,7 +8,8 @@ const MessageTimeline = ({
   profileImageUrl,
   username,
   biography,
-  activeProfile
+  activeProfile,
+  onSelectUser
 }) => (
   <div className="row d-flex justify-content-sm-center">
     <UserAside
@@ -17,6 +18,7 @@ const MessageTimeline = ({
       }
       username={activeProfile ? activeProfile.username : username}
       biography={activeProfile ? activeProfile.biography : biography}
+      onSelectUser={onSelectUser}
     />
     <div className="col-sm-12 col-md-8 loading-wrapper">
       {!activeProfile && (

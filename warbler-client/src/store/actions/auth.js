@@ -24,7 +24,7 @@ export function logout() {
 
 export const authUser = (type, userData) => (dispatch, getState) => {
   let { currentUser } = getState();
-  const id = currentUser.user.id;
+  const id = currentUser.user._id;
   dispatch(setLoadingState(true));
   return new Promise((resolve, reject) => {
     return apiCall(
@@ -52,7 +52,7 @@ export const authUser = (type, userData) => (dispatch, getState) => {
 
 export const updatePassword = passwordData => (dispatch, getState) => {
   let { currentUser } = getState();
-  const id = currentUser.user.id;
+  const id = currentUser.user._id;
   dispatch(setLoadingState(true));
   return apiCall('put', `/api/auth/${id}/password`, passwordData)
     .then(res => {

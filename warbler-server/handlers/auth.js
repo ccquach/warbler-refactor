@@ -10,10 +10,10 @@ exports.signup = async function(req, res, next) {
       });
     }
     let user = await db.User.create(req.body);
-    let { id, username, biography, profileImageUrl, phoneNumber } = user;
+    let { _id, username, biography, profileImageUrl, phoneNumber } = user;
     let token = jwt.sign(
       {
-        id,
+        _id,
         username,
         biography,
         profileImageUrl,
@@ -22,7 +22,7 @@ exports.signup = async function(req, res, next) {
       process.env.SECRET_KEY
     );
     return res.status(200).json({
-      id,
+      _id,
       username,
       biography,
       profileImageUrl,
@@ -45,12 +45,12 @@ exports.signin = async function(req, res, next) {
     let user = await db.User.findOne({
       email: req.body.email
     });
-    let { id, username, biography, profileImageUrl, phoneNumber } = user;
+    let { _id, username, biography, profileImageUrl, phoneNumber } = user;
     let isMatch = await user.comparePassword(req.body.password);
     if (isMatch) {
       let token = jwt.sign(
         {
-          id,
+          _id,
           username,
           biography,
           profileImageUrl,
@@ -59,7 +59,7 @@ exports.signin = async function(req, res, next) {
         process.env.SECRET_KEY
       );
       return res.status(200).json({
-        id,
+        _id,
         username,
         biography,
         profileImageUrl,
@@ -88,10 +88,10 @@ exports.updateUser = async function(req, res, next) {
     user.profileImageUrl = req.body.profileImageUrl;
     user.phoneNumber = req.body.phoneNumber;
     await user.save();
-    let { id, username, biography, profileImageUrl, phoneNumber } = user;
+    let { _id, username, biography, profileImageUrl, phoneNumber } = user;
     let token = jwt.sign(
       {
-        id,
+        _id,
         username,
         biography,
         profileImageUrl,
@@ -100,7 +100,7 @@ exports.updateUser = async function(req, res, next) {
       process.env.SECRET_KEY
     );
     return res.status(200).json({
-      id,
+      _id,
       username,
       biography,
       profileImageUrl,

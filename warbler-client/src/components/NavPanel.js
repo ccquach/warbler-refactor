@@ -104,7 +104,7 @@ class NavPanel extends Component {
                         <Link to="/">Home</Link>
                       </li>
                       <li>
-                        <Link to={`/users/${currentUser.user.id}/settings`}>
+                        <Link to={`/users/${currentUser.user._id}/settings`}>
                           Account
                         </Link>
                       </li>

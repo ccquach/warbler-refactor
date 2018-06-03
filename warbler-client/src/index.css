@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 
 body {
   background-color: #e6ecf0;
@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 /* Homepage */
@@ -54,6 +54,10 @@ body {
   display: inline-block;
 }
 
+.message-area a {
+  font-weight: 500;
+}
+
 .btn:hover {
   cursor: pointer;
 }
@@ -80,6 +84,12 @@ form a {
 
 form a:not([href]):not([tabindex]):hover {
   text-decoration: underline;
+}
+
+/* User Aside */
+
+.card-title a {
+  color: #000;
 }
 
 /* Loading */

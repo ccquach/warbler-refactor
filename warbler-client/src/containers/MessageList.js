@@ -96,7 +96,7 @@ class MessageList extends Component {
 function mapStateToProps(state) {
   return {
     messages: state.messages,
-    currentUser: state.currentUser.user.id,
+    currentUser: state.currentUser.user._id,
     filteredData: getFilteredDataByUser(
       state.messages,
       state.activeProfile._id
