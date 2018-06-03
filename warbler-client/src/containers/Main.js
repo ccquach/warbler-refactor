@@ -9,6 +9,7 @@ import withAuth from '../hocs/withAuth';
 import FlashMessage from './FlashMessage';
 import Scale from '../components/animations/Scale';
 import MessageTimeline from '../components/MessageTimeline';
+import NotFound from '../components/NotFound';
 
 const AuthenticatedUserSettings = withAuth(AuthForm);
 
@@ -85,6 +86,7 @@ const Main = props => {
           path="/users/:username"
           render={() => <MessageTimeline activeProfile={activeProfile} />}
         />
+        <Route component={NotFound} />
       </Switch>
     </div>
   );
