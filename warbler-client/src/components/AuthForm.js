@@ -84,31 +84,7 @@ class AuthForm extends Component {
       changePassword
     } = this.state;
 
-    const {
-      heading,
-      buttonText,
-      signUp,
-      updateUser,
-      isFetching,
-      history
-    } = this.props;
-
-    // reset form on route change between signup/login
-    history.listen(() => {
-      if (!updateUser) {
-        console.log('hit reset');
-        this.setState({
-          email: '',
-          username: '',
-          password: '',
-          groupPassword: '',
-          biography: '',
-          profileImageUrl: '',
-          phoneNumber: '',
-          smsEnabled: false
-        });
-      }
-    });
+    const { heading, buttonText, signUp, updateUser, isFetching } = this.props;
 
     return (
       <div className="row justify-content-md-center loading-wrapper">
