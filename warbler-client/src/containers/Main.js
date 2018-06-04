@@ -14,6 +14,7 @@ import {
   getActiveProfileUser
 } from '../store/actions/activeProfile';
 import NotFound from '../components/NotFound';
+import Loading from '../components/Loading';
 
 const AuthenticatedUserSettings = withAuth(AuthForm);
 
@@ -39,6 +40,7 @@ const Main = props => {
 
   return (
     <div className="container" style={mainStyle}>
+      {isFetching ? <Loading /> : null}
       <Scale el="flash">{flash.message && <FlashMessage />}</Scale>
       <Switch>
         <Route

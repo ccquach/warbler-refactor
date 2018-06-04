@@ -80,7 +80,7 @@
 }
 
 @media (max-width: 450px) {
-  svg {
+  #not-found-svg {
     position: absolute;
     top: 50%;
     left: 50%;

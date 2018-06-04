@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { fetchMessages, removeMessage } from '../store/actions/messages';
 import MessageItem from '../components/MessageItem';
 import { spring, TransitionMotion } from 'react-motion';
-import Loading from '../components/Loading';
 import { getFilteredDataByUser } from '../utils/filters';
 import { setActiveProfile } from '../store/actions/activeProfile';
 
@@ -38,7 +37,6 @@ class MessageList extends Component {
 
     return (
       <div>
-        {isFetching ? <Loading /> : null}
         <div className="col-sm-12 offset-md-1 col-md-10">
           <ul
             className="list-group"

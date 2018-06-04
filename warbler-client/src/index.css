@@ -115,11 +115,6 @@ form a:not([href]):not([tabindex]):hover {
 
 /* Loading */
 
-.loading-wrapper {
-  position: relative;
-  height: 80vh;
-}
-
 .ajaxLoad {
   position: absolute;
   top: 50%;

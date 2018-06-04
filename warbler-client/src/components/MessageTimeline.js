@@ -36,7 +36,7 @@ class MessageTimeline extends Component {
           biography={activeProfile ? activeProfile.biography : biography}
           onSelectUser={onSelectUser}
         />
-        <div className="col-sm-12 col-md-8 loading-wrapper">
+        <div className="col-sm-12 col-md-8">
           {!activeProfile && (
             <div>
               <MessageForm />

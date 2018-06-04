@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PasswordForm from './PasswordForm';
 import DefaultProfileImg from '../images/default-profile-image.jpg';
-import Loading from './Loading';
 
 class AuthForm extends Component {
   constructor(props) {
@@ -87,8 +86,7 @@ class AuthForm extends Component {
     const { heading, buttonText, signUp, updateUser, isFetching } = this.props;
 
     return (
-      <div className="row loading-wrapper">
-        {isFetching ? <Loading /> : null}
+      <div className="row">
         <div className="col-8 offset-2 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
           <form
             onSubmit={this.handleSubmit}
