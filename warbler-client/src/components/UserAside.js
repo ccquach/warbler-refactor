@@ -14,7 +14,7 @@ const UserAside = ({ profileImageUrl, username, biography, onSelectUser }) => (
       />
       <div className="card-body">
         <h5 className="card-title">
-          <Link to={`/users/${username}`} onClick={onSelectUser}>
+          <Link to={`/${username}`} onClick={onSelectUser}>
             @{username}
           </Link>
         </h5>

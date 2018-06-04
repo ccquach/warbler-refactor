@@ -25,7 +25,7 @@ const MessageItem = ({
           className="timeline-image"
         />
         <div className="message-area">
-          <Link to={`/users/${username}`} onClick={onSelectUser}>
+          <Link to={`/${username}`} onClick={onSelectUser}>
             @{username} &nbsp;
           </Link>
           <span className="text-muted">

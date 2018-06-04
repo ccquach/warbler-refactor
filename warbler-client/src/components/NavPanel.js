@@ -104,9 +104,7 @@ class NavPanel extends Component {
                         <Link to="/">Home</Link>
                       </li>
                       <li>
-                        <Link to={`/users/${currentUser.user._id}/settings`}>
-                          Account
-                        </Link>
+                        <Link to={`/settings`}>Account</Link>
                       </li>
                       <li>
                         <a onClick={this.handleLogout}>Log out</a>
