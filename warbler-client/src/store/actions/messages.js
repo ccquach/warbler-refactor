@@ -13,27 +13,23 @@ export const remove = id => ({
   id
 });
 
-export const removeMessage = (user_id, message_id) => {
-  return dispatch => {
-    return apiCall('delete', `/api/users/${user_id}/messages/${message_id}`)
-      .then(() => dispatch(remove(message_id)))
-      .catch(err => dispatch(addFlash('danger', err.message)));
-  };
+export const removeMessage = (user_id, message_id) => dispatch => {
+  return apiCall('delete', `/api/users/${user_id}/messages/${message_id}`)
+    .then(() => dispatch(remove(message_id)))
+    .catch(err => dispatch(addFlash('danger', err.message)));
 };
 
-export const fetchMessages = () => {
-  return dispatch => {
-    dispatch(setLoadingState(true));
-    return apiCall('get', '/api/messages')
-      .then(res => {
-        dispatch(setLoadingState(false));
-        dispatch(loadMessages(res));
-      })
-      .catch(err => {
-        dispatch(setLoadingState(false));
-        dispatch(addFlash('danger', err.message));
-      });
-  };
+export const fetchMessages = () => dispatch => {
+  dispatch(setLoadingState(true));
+  return apiCall('get', '/api/messages')
+    .then(res => {
+      dispatch(setLoadingState(false));
+      dispatch(loadMessages(res));
+    })
+    .catch(err => {
+      dispatch(setLoadingState(false));
+      dispatch(addFlash('danger', err.message));
+    });
 };
 
 export const postNewMessage = text => (dispatch, getState) => {

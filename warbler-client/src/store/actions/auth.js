@@ -3,24 +3,20 @@ import { SET_CURRENT_USER } from '../actionTypes';
 import { addFlash } from './flash';
 import { setLoadingState } from './loading';
 
-export function setCurrentUser(user) {
-  return {
-    type: SET_CURRENT_USER,
-    user
-  };
-}
+export const setCurrentUser = user => ({
+  type: SET_CURRENT_USER,
+  user
+});
 
-export function setAuthorizationToken(token) {
+export const setAuthorizationToken = token => {
   setTokenHeader(token);
-}
+};
 
-export function logout() {
-  return dispatch => {
-    localStorage.clear();
-    setAuthorizationToken(false);
-    dispatch(setCurrentUser({}));
-  };
-}
+export const logout = () => dispatch => {
+  localStorage.clear();
+  setAuthorizationToken(false);
+  dispatch(setCurrentUser({}));
+};
 
 export const authUser = (type, userData) => (dispatch, getState) => {
   let { currentUser } = getState();
