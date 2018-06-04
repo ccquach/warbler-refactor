@@ -58,6 +58,27 @@ body {
   font-weight: 500;
 }
 
+@media (max-width: 576px) {
+  #messages .list-group-item > div {
+    display: flex;
+    align-items: center;
+  }
+
+  .message-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .message-area p {
+    margin: 0;
+  }
+
+  .timeline-image {
+    margin: 0 30px 0 0;
+  }
+}
+
 .btn:hover {
   cursor: pointer;
 }

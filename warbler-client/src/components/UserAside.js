@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import DefaultProfileImg from '../images/default-profile-image.jpg';
 
 const UserAside = ({ profileImageUrl, username, biography, onSelectUser }) => (
-  <aside className="col-sm-10 col-md-3 mb-4">
+  <aside className="col-8 offset-2 col-sm-8 offset-sm-2 col-md-4 offset-md-0 mb-4">
     <div className="card">
       <img
         src={profileImageUrl || DefaultProfileImg}

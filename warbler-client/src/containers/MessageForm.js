@@ -52,7 +52,6 @@ class MessageForm extends Component {
             onChange={e => this.setState({ message: e.target.value })}
             autoComplete="false"
             autoCapitalize="none"
-            autoFocus="true"
             placeholder="Hello world!"
           />
           <CharButton

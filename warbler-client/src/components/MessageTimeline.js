@@ -27,7 +27,7 @@ class MessageTimeline extends Component {
     } = this.props;
 
     return (
-      <div className="row d-flex justify-content-sm-center">
+      <div className="row d-flex justify-content-md-center">
         <UserAside
           profileImageUrl={
             activeProfile ? activeProfile.profileImageUrl : profileImageUrl

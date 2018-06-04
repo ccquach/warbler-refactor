@@ -87,9 +87,9 @@ class AuthForm extends Component {
     const { heading, buttonText, signUp, updateUser, isFetching } = this.props;
 
     return (
-      <div className="row justify-content-md-center loading-wrapper">
+      <div className="row loading-wrapper">
         {isFetching ? <Loading /> : null}
-        <div className="col-md-6">
+        <div className="col-8 offset-2 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
           <form
             onSubmit={this.handleSubmit}
             style={{ opacity: isFetching ? 0.5 : 1 }}
