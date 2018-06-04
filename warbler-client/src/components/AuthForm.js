@@ -63,6 +63,7 @@ class AuthForm extends Component {
         if (!this.props.updateUser) {
           this.props.history.push('/');
         }
+        window.scrollTo(0, 0);
         return;
       })
       .catch(() => {
