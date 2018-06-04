@@ -83,7 +83,7 @@ const Main = props => {
         />
         <Route
           path="/settings"
-          render={() => (
+          render={props => (
             <AuthenticatedUserSettings
               onAuth={authUser}
               onChangePassword={updatePassword}
