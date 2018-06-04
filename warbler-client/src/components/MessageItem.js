@@ -17,13 +17,15 @@ const MessageItem = ({
   <div style={style}>
     <li className="list-group-item d-flex justify-content-between align-items-center">
       <div>
-        <img
-          src={profileImageUrl || DefaultProfileImg}
-          alt={username}
-          height="100"
-          width="100"
-          className="timeline-image"
-        />
+        <Link to={`/${username}`} onClick={onSelectUser}>
+          <img
+            src={profileImageUrl || DefaultProfileImg}
+            alt={username}
+            height="100"
+            width="100"
+            className="timeline-image"
+          />
+        </Link>
         <div className="message-area">
           <Link to={`/${username}`} onClick={onSelectUser}>
             @{username} &nbsp;
