@@ -39,7 +39,7 @@ class MessageList extends Component {
       <div>
         <div className="col-sm-12 offset-md-1 col-md-10">
           <ul
-            className="list-group"
+            className="list-group mb-4"
             id="messages"
             style={{ opacity: isFetching ? 0.5 : 1, width: '100%' }}
           >
