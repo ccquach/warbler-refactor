@@ -1,3 +1,3 @@
-export const getFilteredDataByUser = (messages, userId) => {
-  return messages.filter(m => m.user._id === userId);
+export const getFilteredDataByUser = (messages, username) => {
+  return messages.filter(m => m.user.username === username);
 };

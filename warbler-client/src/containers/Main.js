@@ -9,7 +9,10 @@ import withAuth from '../hocs/withAuth';
 import FlashMessage from './FlashMessage';
 import Scale from '../components/animations/Scale';
 import MessageTimeline from '../components/MessageTimeline';
-import { setActiveProfile } from '../store/actions/activeProfile';
+import {
+  setActiveProfile,
+  getActiveProfileUser
+} from '../store/actions/activeProfile';
 import NotFound from '../components/NotFound';
 
 const AuthenticatedUserSettings = withAuth(AuthForm);
@@ -25,7 +28,8 @@ const Main = props => {
     isFetching,
     mainStyle,
     activeProfile,
-    setActiveProfile
+    setActiveProfile,
+    getActiveProfileUser
   } = props;
 
   // remove flash on route change
@@ -76,7 +80,7 @@ const Main = props => {
           )}
         />
         <Route
-          path="/users/:id/settings"
+          path="/settings"
           render={() => (
             <AuthenticatedUserSettings
               onAuth={authUser}
@@ -91,8 +95,13 @@ const Main = props => {
           )}
         />
         <Route
-          path="/users/:username"
-          render={() => <MessageTimeline activeProfile={activeProfile} />}
+          path="/:username"
+          render={() => (
+            <MessageTimeline
+              activeProfile={activeProfile}
+              getActiveProfileUser={getActiveProfileUser}
+            />
+          )}
         />
         <Route component={NotFound} />
       </Switch>
@@ -114,6 +123,7 @@ export default withRouter(
     authUser,
     removeFlash,
     updatePassword,
-    setActiveProfile
+    setActiveProfile,
+    getActiveProfileUser
   })(Main)
 );

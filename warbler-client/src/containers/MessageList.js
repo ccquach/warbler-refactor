@@ -99,7 +99,7 @@ function mapStateToProps(state) {
     currentUser: state.currentUser.user._id,
     filteredData: getFilteredDataByUser(
       state.messages,
-      state.activeProfile._id
+      state.activeProfile.username
     ),
     isFetching: state.loading.isFetching
   };
